@@ -1,0 +1,27 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main # The branch to trigger deployment from
+
+permissions:
+  contents: write # Grant write permissions to the GITHUB_TOKEN
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@v4 # Action to check out your repository code
+
+    - name: Install and Build 🔧
+      run: |
+        npm ci
+        npm run build # Replace with your project's build commands
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build # The folder the action should deploy (output of your build)
